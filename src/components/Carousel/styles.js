@@ -8,7 +8,6 @@ export const Title = styled.h3`
   margin-bottom: 16px;
   display: inline-block;
   padding: 20px;
-  background: red;
   line-height: 1;
   border-radius: 4px;
 
@@ -52,5 +51,4 @@ export const VideoCardGroupContainer = styled.section`
   min-height: 197px;
   margin-left: 5%;
   margin-bottom: 16px;
-
 `;
