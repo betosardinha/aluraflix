@@ -3,35 +3,23 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 function CadastroCategoria() {
-  const valoresIniciais = {
+  const initValues = {
     nome: '',
     descricao: '',
     cor: '#000000',
   };
 
+  const { handleChange, values, clearForm } = useForm(initValues);
+
   const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
-
-  function setValue(key, value) {
-    setValues({
-      ...values,
-      [key]: value,
-    });
-  }
-
-  function handleChange(info) {
-    setValue(
-      info.target.getAttribute('name'),
-      info.target.value,
-    );
-  }
 
   useEffect(() => {
     const URL = window.location.hostname.includes('localhost')
       ? 'http://localhost:8080/categorias'
-      : 'https://betosardinha-aluraflix.herokuapp.com/categorias';
+      : 'https://aluraflix-betosardinha.herokuapp.com/categorias';
     fetch(URL)
       .then(async (respostaDoServer) => {
         if (respostaDoServer.ok) {
@@ -50,7 +38,7 @@ function CadastroCategoria() {
       values,
     ]);
 
-    setValues(valoresIniciais);
+    clearForm();
   }
 
   return (
@@ -90,10 +78,16 @@ function CadastroCategoria() {
         </Button>
       </form>
 
+      {categorias.length === 0 && (
+        <div>
+          Carregando...
+        </div>
+      )}
+
       <ul>
         {categorias.map((categoria) => (
-          <li key={`${categoria.nome}`}>
-            {categoria.nome}
+          <li key={`${categoria.titulo}`}>
+            {categoria.titulo}
           </li>
         ))}
       </ul>
